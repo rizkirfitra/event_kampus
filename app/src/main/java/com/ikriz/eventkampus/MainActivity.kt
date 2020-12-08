@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        btn_add.setOnClickListener {
+            startActivity(Intent(this, AddEvent::class.java))
+        }
+
         if (user != null) {
             btn_login_main.visibility = View.GONE
             btn_logout_main.visibility = View.VISIBLE

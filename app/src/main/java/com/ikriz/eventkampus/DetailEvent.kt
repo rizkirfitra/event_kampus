@@ -30,7 +30,7 @@ class DetailEvent : AppCompatActivity() {
         val user = auth.currentUser
 
         if (user != null) {
-            db.collection("user").document(user?.uid.toString()).get()
+            db.collection("user").document(user.uid.toString()).get()
                 .addOnSuccessListener {
                     if (it.get("role") == "panitia") {
                         btn_daftar.visibility = View.GONE
@@ -51,6 +51,10 @@ class DetailEvent : AppCompatActivity() {
             kuota.text = event.get("kuota").toString()
             lokasi.text = event.get("lokasi").toString()
             narahubung.text = event.get("narahubung").toString()
+            if (event.get("harga") != null) {
+                harga.text = event.get("harga").toString()
+                layout_harga.visibility = View.VISIBLE
+            }
             if (event.get("logo") != null) {
                 Glide.with(this).load(event.get("logo").toString()).override(200).centerCrop()
                     .into(logo)
