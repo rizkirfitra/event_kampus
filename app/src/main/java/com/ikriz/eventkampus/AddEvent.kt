@@ -61,7 +61,8 @@ class AddEvent : AppCompatActivity() {
             val db = Firebase.firestore
             if (et_harga.text.isEmpty()) {
                 uploadFile()
-                val linkDownload = "gs://event-kampus.appspot.com/Logo Event/" + namaLogo
+                filepath
+                val linkDownload = "https://firebasestorage.googleapis.com/v0/b/event-kampus.appspot.com/o/Logo%20Event%2F$namaLogo?alt=media"
                 val data = hashMapOf(
                     "judul" to judul,
                     "deskripsi" to deskripsi,
@@ -75,7 +76,7 @@ class AddEvent : AppCompatActivity() {
                 eventUpload.set(data)
             } else {
                 uploadFile()
-                val linkDownload = "gs://event-kampus.appspot.com/Logo Event/" + namaLogo
+                val linkDownload = "https://firebasestorage.googleapis.com/v0/b/event-kampus.appspot.com/o/Logo%20Event%2F$namaLogo?alt=media"
                 val harga = et_harga.text.toString()
                 val data = hashMapOf(
                     "judul" to judul,
