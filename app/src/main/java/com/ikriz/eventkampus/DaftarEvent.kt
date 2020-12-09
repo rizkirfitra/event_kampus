@@ -1,9 +1,6 @@
 package com.ikriz.eventkampus
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_daftar_event.*
-import kotlinx.android.synthetic.main.activity_detail_event.*
 
 class DaftarEvent : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -56,21 +52,11 @@ class DaftarEvent : AppCompatActivity() {
                 "email" to email,
                 "nomorTlp" to telepon
             )
-            db.collection("peserta").whereEqualTo("id_user", id_user).get().addOnSuccessListener {
-                if (!it.isEmpty) {
-                    Toast.makeText(this, "Sudah terdaftar", Toast.LENGTH_LONG).show()
-                    btn_daftar.apply {
-                        text = "Terdaftar"
-                        isEnabled = false
-                    }
-                } else {
-                    uploadPeserta.set(data)
-                    eventRef.update("kuota", FieldValue.increment(-1)).addOnSuccessListener {
-                        Toast.makeText(this, "Daftar berhasil", Toast.LENGTH_LONG).show()
-                        onBackPressed()
-                        finish()
-                    }
-                }
+            uploadPeserta.set(data)
+            eventRef.update("kuota", FieldValue.increment(-1)).addOnSuccessListener {
+                Toast.makeText(this, "Daftar berhasil", Toast.LENGTH_LONG).show()
+                onBackPressed()
+                finish()
             }
         }
         daftar_cancel.setOnClickListener {

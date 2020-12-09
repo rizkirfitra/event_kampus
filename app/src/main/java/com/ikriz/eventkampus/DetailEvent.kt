@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -42,21 +43,32 @@ class DetailEvent : AppCompatActivity() {
         } else {
             btn_daftar.visibility = View.GONE
         }
-
+        btn_daftar.isEnabled = true
         btn_daftar.setOnClickListener {
             if (user != null) {
-                val eventRef = db.collection("event").document(id_event)
-                eventRef.get().addOnSuccessListener {
-                    kuotaEvent = it.get("kuota").toString().toInt()
-                    if (kuotaEvent > 0) {
-                        startActivity(Intent(this, DaftarEvent::class.java).apply {
-                            putExtra("id_event", id_event)
-                            putExtra("kuota_event", kuotaEvent)
-                        })
-                    } else {
-                        Toast.makeText(this, "Kuota habis", Toast.LENGTH_SHORT).show()
+                db.collection("peserta").whereEqualTo("id_event", id_event).get()
+                    .addOnSuccessListener {
+                        if (!it.isEmpty) {
+                            Toast.makeText(this, "Sudah terdaftar", Toast.LENGTH_LONG).show()
+                            btn_daftar.apply {
+                                text = "Terdaftar"
+                                isEnabled = false
+                            }
+                        } else {
+                            val eventRef = db.collection("event").document(id_event)
+                            eventRef.get().addOnSuccessListener {
+                                kuotaEvent = it.get("kuota").toString().toInt()
+                                if (kuotaEvent > 0) {
+                                    startActivity(Intent(this, DaftarEvent::class.java).apply {
+                                        putExtra("id_event", id_event)
+                                        putExtra("kuota_event", kuotaEvent)
+                                    })
+                                } else {
+                                    Toast.makeText(this, "Kuota habis", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     }
-                }
             }
         }
     }
