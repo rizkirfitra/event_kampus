@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -83,8 +82,8 @@ class MainActivity : AppCompatActivity() {
                 viewHolder.bindItem(model)
                 val id = mAdapter.snapshots.getSnapshot(position).id
                 viewHolder.itemView.setOnClickListener {
-                    startActivity(Intent(baseContext, DetailEvent::class.java).apply {
-                        putExtra("id", id)
+                    startActivity(Intent(this@MainActivity, DetailEvent::class.java).apply {
+                        putExtra("id_event", id)
                     })
                 }
             }

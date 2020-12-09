@@ -33,14 +33,4 @@
         android:text="Deskripsi event"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/deskripsi_event"
-        android:layout_toRightOf="@+id/logo_event"
-        android:clickable="true"
-        android:text="Detail Event"
-        android:textSize="16sp" />
-
 </RelativeLayout>
